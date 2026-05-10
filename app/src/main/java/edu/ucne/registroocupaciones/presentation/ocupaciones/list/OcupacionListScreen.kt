@@ -139,11 +139,15 @@ fun OcupacionItem(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = ocupacion.descripcion,
+                    text = "ID: ${ocupacion.ocupacionId}",
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
-                    text = "RD$ ${ocupacion.sueldo}",
+                    text = "Descripcion: ${ocupacion.descripcion}",
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Text(
+                    text = "Sueldo: ${ocupacion.sueldo}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
