@@ -7,5 +7,5 @@ sealed class Screen {
     data object OcupacionList : Screen()
 
     @Serializable
-    data class OcupacionForm(val taskId: Int) : Screen()
+    data class OcupacionForm(val ocupacionId: Int) : Screen()
 }
