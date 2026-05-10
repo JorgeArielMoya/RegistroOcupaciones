@@ -5,6 +5,7 @@ data class OcupacionFormUiState(
     val descripcion: String = "",
     val sueldo: String = "",
     val descripcionError: String? = null,
+    val descripcionDuplicada: Boolean = false,
     val sueldoError: String? = null,
     val isSaving: Boolean = false,
     val isDeleting: Boolean = false,
