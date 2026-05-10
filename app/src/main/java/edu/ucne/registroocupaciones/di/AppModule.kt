@@ -23,7 +23,7 @@ object AppModule {
         return Room.databaseBuilder(
             context,
             OcupacionDatabase::class.java,
-            "OcupacionDatabase"
+            "ocupacion_database"
         ).build()
     }
 
