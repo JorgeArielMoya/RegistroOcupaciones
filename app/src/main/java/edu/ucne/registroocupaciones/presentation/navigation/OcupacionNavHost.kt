@@ -1,0 +1,1 @@
+package edu.ucne.registroocupaciones.presentation.navigation
