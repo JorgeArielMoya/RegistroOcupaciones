@@ -40,7 +40,7 @@ class OcupacionFormViewModel @Inject constructor(
         when (event) {
             is OcupacionFormUiEvent.Load -> loadOcupacion(event.id)
             is OcupacionFormUiEvent.DescripcionChanged -> _state.update {
-                it.copy(descripcion = event.value, descripcionError = null)
+                it.copy(descripcion = event.value, descripcionError = null, descripcionDuplicada = false )
             }
             is OcupacionFormUiEvent.SueldoChanged -> _state.update {
                 it.copy(sueldo = event.value, sueldoError = null)
@@ -107,8 +107,15 @@ class OcupacionFormViewModel @Inject constructor(
                         isNew = false
                     )
                 }
-            }.onFailure {
-                _state.update { it.copy(isSaving = false) }
+            }
+                result.onFailure { error ->
+                val isDuplicate = error.message?.contains("Ya existe una ocupación") == true
+                _state.update {
+                    it.copy(
+                        isSaving = false,
+                        descripcionDuplicada = isDuplicate
+                    )
+                }
             }
         }
     }
