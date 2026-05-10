@@ -53,8 +53,16 @@ fun OcupacionFormScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .testTag("input_description"),
-                isError = state.descripcionError != null,
-                supportingText = state.descripcionError?.let { { Text(it) } },
+                isError = state.descripcionError != null || state.descripcionDuplicada,
+                supportingText = {
+                    when {
+                        state.descripcionError != null -> Text(state.descripcionError!!)
+                        state.descripcionDuplicada -> Text(
+                            text = "Esta ocupación ya ha sido registrada",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                },
                 singleLine = false,
                 minLines = 3,
                 maxLines = 5
