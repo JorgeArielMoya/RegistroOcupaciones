@@ -18,6 +18,11 @@ class UpsertOcupacionUseCase @Inject constructor(
             return Result.failure(IllegalArgumentException(sueldoResult.error))
         }
 
+        val exists = repository.existsByDescripcion(ocupacion.descripcion, ocupacion.ocupacionId)
+        if (exists) {
+            return Result.failure(IllegalArgumentException("Ya existe una ocupación con esta descripción"))
+        }
+
         return runCatching { repository.upsert(ocupacion) }
     }
 }
