@@ -56,6 +56,12 @@ fun OcupacionListBody(
     }
 
     Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { Text("Registro de Ocupaciones") }
+            )
+        },
+
         snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
