@@ -32,10 +32,6 @@ class OcupacionRepositoryImpl @Inject constructor(
         localDataSource.deleteById(id)
     }
 
-    override suspend fun exists(id: Int): Boolean {
-        return localDataSource.exists(id)
-    }
-
     override suspend fun existsByDescripcion(descripcion: String, excludeId: Int): Boolean {
         return localDataSource.existsByDescripcion(descripcion, excludeId)
     }
