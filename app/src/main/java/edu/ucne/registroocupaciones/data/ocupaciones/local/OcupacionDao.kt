@@ -26,6 +26,6 @@ interface OcupacionDao {
     @Query("SELECT EXISTS(SELECT 1 FROM ocupaciones WHERE ocupacionId = :id)")
     suspend fun exists(id: Int): Boolean
 
-    @Query("SELECT COUNT(*) > 0 FROM Ocupaciones WHERE descripcion = :descripcion AND ocupacionId != :excludeId")
+    @Query("SELECT COUNT(*) > 0 FROM Ocupaciones WHERE descripcion = :descripcion COLLATE NOCASE AND ocupacionId != :excludeId")
     suspend fun existsByDescripcion(descripcion: String, excludeId: Int): Boolean
 }
