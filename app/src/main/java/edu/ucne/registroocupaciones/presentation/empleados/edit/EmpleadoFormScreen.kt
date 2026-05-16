@@ -2,14 +2,12 @@ package edu.ucne.registroocupaciones.presentation.empleados.edit
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.outlined.Face
-import androidx.compose.material.icons.outlined.Person
-import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -117,18 +115,71 @@ fun EmpleadoFormScreen(
                 }
             }
 
-            OutlinedTextField(
-                value = state.fechaIngreso,
-                onValueChange = { viewModel.onEvent(EmpleadoFormUiEvent.FechaIngresoChanged(it)) },
-                label = { Text("Fecha de Ingreso (yyyy-MM-dd)") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .testTag("input_fecha_ingreso"),
-                isError = state.fechaIngresoError != null,
-                supportingText = state.fechaIngresoError?.let { { Text(it) } },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                singleLine = true
-            )
+            var showDatePicker by remember { mutableStateOf(false) }
+            val datePickerState = rememberDatePickerState()
+
+            Box {
+                OutlinedTextField(
+                    value = state.fechaIngreso,
+                    onValueChange = {},
+                    readOnly = true, // Evita que abran el teclado
+                    label = { Text("Fecha de Ingreso") },
+                    placeholder = { Text("Selecciona la fecha") },
+                    trailingIcon = {
+                        IconButton(onClick = { showDatePicker = true }) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowDropDown,
+                                contentDescription = "Seleccionar fecha"
+                            )
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("input_fecha_ingreso"),
+                    isError = state.fechaIngresoError != null,
+                    supportingText = state.fechaIngresoError?.let { { Text(it) } }
+                )
+
+                Box(
+                    modifier = Modifier
+                        .matchParentSize()
+                        .align(androidx.compose.ui.Alignment.Center)
+                        .clickable { showDatePicker = true }
+                )
+            }
+
+            if (showDatePicker) {
+                DatePickerDialog(
+                    onDismissRequest = { showDatePicker = false },
+                    confirmButton = {
+                        TextButton(
+                            onClick = {
+                                val selectedDateMillis = datePickerState.selectedDateMillis
+                                if (selectedDateMillis != null) {
+                                    // Convierte los milisegundos a LocalDate (UTC) para evitar desfases de zona horaria
+                                    val localDate = java.time.Instant
+                                        .ofEpochMilli(selectedDateMillis)
+                                        .atZone(java.time.ZoneOffset.UTC)
+                                        .toLocalDate()
+
+                                    // Envía la fecha formateada en yyyy-MM-dd a tu ViewModel
+                                    viewModel.onEvent(EmpleadoFormUiEvent.FechaIngresoChanged(localDate.toString()))
+                                }
+                                showDatePicker = false
+                            }
+                        ) {
+                            Text("Aceptar")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showDatePicker = false }) {
+                            Text("Cancelar")
+                        }
+                    }
+                ) {
+                    DatePicker(state = datePickerState)
+                }
+            }
 
             OutlinedTextField(
                 value = state.sueldo,
