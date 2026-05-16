@@ -17,7 +17,7 @@ class EmpleadoRepositoryImpl @Inject constructor(
         return empleado.empleadoId
     }
 
-    override suspend fun deleteEmpleado(id: Int) {
+    override suspend fun delete(id: Int) {
         localDataSource.deleteById(id)
     }
 
