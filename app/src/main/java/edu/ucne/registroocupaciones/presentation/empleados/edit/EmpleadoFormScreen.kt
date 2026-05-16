@@ -122,7 +122,7 @@ fun EmpleadoFormScreen(
                 OutlinedTextField(
                     value = state.fechaIngreso,
                     onValueChange = {},
-                    readOnly = true, // Evita que abran el teclado
+                    readOnly = true,
                     label = { Text("Fecha de Ingreso") },
                     placeholder = { Text("Selecciona la fecha") },
                     trailingIcon = {
@@ -156,13 +156,11 @@ fun EmpleadoFormScreen(
                             onClick = {
                                 val selectedDateMillis = datePickerState.selectedDateMillis
                                 if (selectedDateMillis != null) {
-                                    // Convierte los milisegundos a LocalDate (UTC) para evitar desfases de zona horaria
                                     val localDate = java.time.Instant
                                         .ofEpochMilli(selectedDateMillis)
                                         .atZone(java.time.ZoneOffset.UTC)
                                         .toLocalDate()
 
-                                    // Envía la fecha formateada en yyyy-MM-dd a tu ViewModel
                                     viewModel.onEvent(EmpleadoFormUiEvent.FechaIngresoChanged(localDate.toString()))
                                 }
                                 showDatePicker = false
