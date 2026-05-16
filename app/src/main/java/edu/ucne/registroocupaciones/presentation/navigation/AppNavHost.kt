@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun OcupacionNavHost(
+fun AppNavHost(
     navController: NavHostController = rememberNavController()
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
