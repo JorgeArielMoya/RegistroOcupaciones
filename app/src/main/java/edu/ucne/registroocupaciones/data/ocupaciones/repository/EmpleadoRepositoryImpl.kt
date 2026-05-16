@@ -26,6 +26,7 @@ class EmpleadoRepositoryImpl @Inject constructor(
     }
 
     override fun observeAll(): Flow<List<Empleado>> {
-        return localDataSource.observeAll().map { empleadoEntities -> empleadoEntities.map { it.toDomain() } }
+        return localDataSource.observeAll()
+            .map { empleadoEntities -> empleadoEntities.map { it.toDomain() } }
     }
 }
