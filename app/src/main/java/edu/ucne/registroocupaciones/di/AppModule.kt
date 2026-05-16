@@ -25,7 +25,7 @@ object AppModule {
             context,
             OcupacionDatabase::class.java,
             "ocupacion_database"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Provides
