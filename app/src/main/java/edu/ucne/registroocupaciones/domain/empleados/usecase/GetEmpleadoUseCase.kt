@@ -1,4 +1,11 @@
 package edu.ucne.registroocupaciones.domain.empleados.usecase
 
-class GetEmpleadoUseCase {
+import edu.ucne.registroocupaciones.domain.empleados.model.Empleado
+import edu.ucne.registroocupaciones.domain.empleados.repository.EmpleadoRepository
+import javax.inject.Inject
+
+class GetEmpleadoUseCase @Inject constructor(
+    private val repository: EmpleadoRepository
+) {
+    suspend operator fun invoke(id : Int) : Empleado? = repository.getEmpleado(id)
 }
