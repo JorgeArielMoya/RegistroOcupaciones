@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.outlined.Face
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -23,6 +27,7 @@ fun EmpleadoFormScreen(
     onBack: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    var dropdownExpanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(state.saved) {
         if (state.saved) {
@@ -49,6 +54,7 @@ fun EmpleadoFormScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+
             OutlinedTextField(
                 value = state.nombres,
                 onValueChange = { viewModel.onEvent(EmpleadoFormUiEvent.NombresChanged(it)) },
@@ -61,15 +67,55 @@ fun EmpleadoFormScreen(
                 singleLine = true
             )
 
-            OutlinedTextField(
-                value = state.sexo,
-                onValueChange = { viewModel.onEvent(EmpleadoFormUiEvent.SexoChanged(it)) },
-                label = { Text("Sexo (M / F)") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .testTag("input_sexo"),
-                singleLine = true
-            )
+            Box {
+                OutlinedTextField(
+                    value = state.sexo.ifBlank { "Seleccionar sexo" },
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text("Sexo") },
+                    trailingIcon = {
+                        IconButton(onClick = { dropdownExpanded = true }) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowDropDown,
+                                contentDescription = "Abrir opciones"
+                            )
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .testTag("input_sexo"),
+
+                    isError = state.sexoError != null,
+                    supportingText = state.sexoError?.let { { Text(it) } }
+                )
+
+                DropdownMenu(
+                    expanded = dropdownExpanded,
+                    onDismissRequest = { dropdownExpanded = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Masculino") },
+                        onClick = {
+                            viewModel.onEvent(EmpleadoFormUiEvent.SexoChanged("Masculino"))
+                            dropdownExpanded = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Femenino") },
+                        onClick = {
+                            viewModel.onEvent(EmpleadoFormUiEvent.SexoChanged("Femenino"))
+                            dropdownExpanded = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Otro") },
+                        onClick = {
+                            viewModel.onEvent(EmpleadoFormUiEvent.SexoChanged("Otro"))
+                            dropdownExpanded = false
+                        }
+                    )
+                }
+            }
 
             OutlinedTextField(
                 value = state.fechaIngreso,
