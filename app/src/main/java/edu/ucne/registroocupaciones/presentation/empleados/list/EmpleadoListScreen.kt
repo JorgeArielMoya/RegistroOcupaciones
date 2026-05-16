@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,7 +21,8 @@ import edu.ucne.registroocupaciones.domain.empleados.model.Empleado
 fun EmpleadoListScreen(
     viewModel: EmpleadoListViewModel = hiltViewModel(),
     onAddEmpleado: () -> Unit,
-    onNavigateToEdit: (Int) -> Unit
+    onNavigateToEdit: (Int) -> Unit,
+    onOpenDrawer: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -36,7 +38,7 @@ fun EmpleadoListScreen(
         }
     }
 
-    EmpleadoListBody(state, viewModel::onEvent, onAddEmpleado)
+    EmpleadoListBody(state, viewModel::onEvent, onAddEmpleado, onOpenDrawer)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,7 +46,8 @@ fun EmpleadoListScreen(
 fun EmpleadoListBody(
     state: EmpleadoListUiState,
     onEvent: (EmpleadoListUiEvent) -> Unit,
-    onAddEmpleado: () -> Unit
+    onAddEmpleado: () -> Unit,
+    onOpenDrawer: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -58,7 +61,15 @@ fun EmpleadoListBody(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Registro de Empleados") }
+                title = { Text("Registro de Empleados") },
+                navigationIcon = {
+                    IconButton(onClick = onOpenDrawer) {
+                        Icon(
+                            imageVector = Icons.Default.Menu,
+                            contentDescription = "Abrir menú"
+                        )
+                    }
+                }
             )
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -165,7 +176,6 @@ fun EmpleadoItem(
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-
             IconButton(
                 onClick = onDelete,
                 modifier = Modifier.testTag("btn_delete_${empleado.empleadoId}")

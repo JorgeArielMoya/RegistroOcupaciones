@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,7 +21,8 @@ import edu.ucne.registroocupaciones.domain.ocupaciones.model.Ocupacion
 fun OcupacionListScreen(
     viewModel: OcupacionListViewModel = hiltViewModel(),
     onAddOcupacion: () -> Unit,
-    onNavigateToEdit: (Int) -> Unit
+    onNavigateToEdit: (Int) -> Unit,
+    onOpenDrawer: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -36,7 +38,7 @@ fun OcupacionListScreen(
         }
     }
 
-    OcupacionListBody(state, viewModel::onEvent, onAddOcupacion)
+    OcupacionListBody(state, viewModel::onEvent, onAddOcupacion, onOpenDrawer)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,7 +46,8 @@ fun OcupacionListScreen(
 fun OcupacionListBody(
     state: OcupacionListUiState,
     onEvent: (OcupacionListUiEvent) -> Unit,
-    onAddOcupacion: () -> Unit
+    onAddOcupacion: () -> Unit,
+    onOpenDrawer: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -58,10 +61,17 @@ fun OcupacionListBody(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Registro de Ocupaciones") }
+                title = { Text("Registro de Ocupaciones") },
+                navigationIcon = {
+                    IconButton(onClick = onOpenDrawer) {
+                        Icon(
+                            imageVector = Icons.Default.Menu,
+                            contentDescription = "Abrir menú"
+                        )
+                    }
+                }
             )
         },
-
         snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
@@ -158,7 +168,6 @@ fun OcupacionItem(
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-
             IconButton(
                 onClick = onDelete,
                 modifier = Modifier.testTag("btn_delete_${ocupacion.ocupacionId}")
