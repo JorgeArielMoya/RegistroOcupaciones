@@ -17,6 +17,10 @@ class UpsertEmpleadoUseCase @Inject constructor(
         if (!nombresResult.isValid)
             return Result.failure(IllegalArgumentException(nombresResult.error))
 
+        val sexoResult = validateSexo(empleado.sexo)
+        if (!sexoResult.isValid)
+            return Result.failure(IllegalArgumentException(sexoResult.error))
+
         val sueldoResult = validateSueldo(empleado.sueldo.toString())
         if (!sueldoResult.isValid)
             return Result.failure(IllegalArgumentException(sueldoResult.error))
