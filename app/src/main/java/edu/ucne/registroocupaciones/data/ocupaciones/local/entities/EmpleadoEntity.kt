@@ -9,7 +9,7 @@ import java.util.Date
 data class EmpleadoEntity (
     @PrimaryKey(autoGenerate = true)
     val empleadoId : Int = 0,
-    val fechaIngreso: LocalDate,
+    val fechaIngreso: String,
     val nombres: String,
     val sexo: String,
     val sueldo: Double
