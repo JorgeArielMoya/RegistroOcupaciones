@@ -13,6 +13,7 @@ import edu.ucne.registroocupaciones.domain.empleados.usecase.GetEmpleadoUseCase
 import edu.ucne.registroocupaciones.domain.empleados.usecase.UpsertEmpleadoUseCase
 import edu.ucne.registroocupaciones.domain.empleados.usecase.validateNombres
 import edu.ucne.registroocupaciones.domain.empleados.usecase.validateFechaIngreso
+import edu.ucne.registroocupaciones.domain.empleados.usecase.validateSexo
 import edu.ucne.registroocupaciones.domain.empleados.usecase.validateSueldo
 import edu.ucne.registroocupaciones.presentation.navigation.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -89,6 +90,7 @@ class EmpleadoFormViewModel @Inject constructor(
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onSave() {
         val nombresValidation = validateNombres(state.value.nombres)
+        val sexoValidation = validateSexo(state.value.sexo)
         val fechaValidation = validateFechaIngreso(
             state.value.fechaIngreso.takeIf { it.isNotBlank() }?.let {
                 runCatching { LocalDate.parse(it) }.getOrNull()
@@ -96,12 +98,13 @@ class EmpleadoFormViewModel @Inject constructor(
         )
         val sueldoValidation = validateSueldo(state.value.sueldo)
 
-        if (!nombresValidation.isValid ||
+        if (!nombresValidation.isValid || !sexoValidation.isValid ||
             !fechaValidation.isValid || !sueldoValidation.isValid
         ) {
             _state.update {
                 it.copy(
                     nombresError = nombresValidation.error,
+                    sexoError = sexoValidation.error,
                     fechaIngresoError = fechaValidation.error,
                     sueldoError = sueldoValidation.error
                 )
