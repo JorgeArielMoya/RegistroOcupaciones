@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import edu.ucne.registroocupaciones.data.ocupaciones.local.dao.EmpleadoDao
 import edu.ucne.registroocupaciones.data.ocupaciones.local.dao.OcupacionDao
 import edu.ucne.registroocupaciones.data.ocupaciones.local.db.OcupacionDatabase
 import jakarta.inject.Singleton
@@ -31,5 +32,11 @@ object AppModule {
     @Singleton
     fun provideOcupacionDao(database: OcupacionDatabase): OcupacionDao {
         return database.ocupacionDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideEmpleadoDao(database: OcupacionDatabase): EmpleadoDao {
+        return database.empleadoDao()
     }
 }
