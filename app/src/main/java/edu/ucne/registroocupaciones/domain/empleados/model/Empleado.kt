@@ -4,7 +4,7 @@ import java.util.Date
 
 data class Empleado (
     val empleadoId : Int = 0,
-    val fecha: Date = Date(),
+    val fechaIngreso: Date = Date(),
     val nombres: String,
     val sexo: String,
     val sueldo: Double
