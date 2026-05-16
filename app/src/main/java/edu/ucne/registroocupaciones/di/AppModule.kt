@@ -7,8 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import edu.ucne.registroocupaciones.data.ocupaciones.local.OcupacionDao
-import edu.ucne.registroocupaciones.data.ocupaciones.local.OcupacionDatabase
+import edu.ucne.registroocupaciones.data.ocupaciones.local.dao.OcupacionDao
+import edu.ucne.registroocupaciones.data.ocupaciones.local.db.OcupacionDatabase
 import jakarta.inject.Singleton
 
 @Module

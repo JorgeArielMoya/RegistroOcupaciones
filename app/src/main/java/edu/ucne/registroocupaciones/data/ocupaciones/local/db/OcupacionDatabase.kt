@@ -1,7 +1,9 @@
-package edu.ucne.registroocupaciones.data.ocupaciones.local
+package edu.ucne.registroocupaciones.data.ocupaciones.local.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import edu.ucne.registroocupaciones.data.ocupaciones.local.dao.OcupacionDao
+import edu.ucne.registroocupaciones.data.ocupaciones.local.entities.OcupacionEntity
 
 @Database(
     entities = [OcupacionEntity::class],
