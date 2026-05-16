@@ -23,6 +23,13 @@ fun validateNombres(nombres: String): ValidationResult {
     }
 }
 
+fun validateSexo(sexo: String): ValidationResult {
+    return when {
+        sexo.isBlank() -> ValidationResult(false, "Debe seleccionar una opción")
+        else -> ValidationResult(true)
+    }
+}
+
 fun validateSueldo(sueldo: String): ValidationResult {
     return when {
         sueldo.isBlank() -> ValidationResult(false, "El sueldo no puede estar vacío")
