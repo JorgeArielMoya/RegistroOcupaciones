@@ -1,6 +1,6 @@
 package edu.ucne.registroocupaciones.domain.empleados.usecase
 
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 data class ValidationResult(
     val isValid: Boolean,
