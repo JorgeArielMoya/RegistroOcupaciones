@@ -1,6 +1,6 @@
 package edu.ucne.registroocupaciones.domain.empleados.model
 
-import java.time.LocalDate
+import org.threeten.bp.LocalDate
 
 data class Empleado (
     val empleadoId : Int = 0,
