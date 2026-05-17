@@ -1,12 +1,9 @@
 package edu.ucne.registroocupaciones.data.ocupaciones.mappers
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import org.threeten.bp.LocalDate
 import edu.ucne.registroocupaciones.data.ocupaciones.local.entities.EmpleadoEntity
 import edu.ucne.registroocupaciones.domain.empleados.model.Empleado
-import java.time.LocalDate
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun EmpleadoEntity.toDomain () : Empleado = Empleado (
     empleadoId = empleadoId,
     fechaIngreso = LocalDate.parse(fechaIngreso),
