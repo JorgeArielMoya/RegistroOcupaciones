@@ -38,7 +38,7 @@ class EmpleadoRepositoryImplTest {
             empleadoId = 0,
             fechaIngreso = LocalDate.of(2024, 1, 15),
             nombres = "Juan Pérez",
-            sexo = "M",
+            sexo = "Masculino",
             sueldo = 45000.0
         )
         val entitySlot = slot<EmpleadoEntity>()
@@ -62,7 +62,7 @@ class EmpleadoRepositoryImplTest {
             empleadoId = 7,
             fechaIngreso = LocalDate.of(2023, 6, 1),
             nombres = "María López",
-            sexo = "F",
+            sexo = "Femenino",
             sueldo = 52000.0
         )
         coEvery { dao.upsert(any()) } just Runs
@@ -83,7 +83,7 @@ class EmpleadoRepositoryImplTest {
             empleadoId = 0,
             fechaIngreso = fecha,
             nombres = "Carlos Ruiz",
-            sexo = "M",
+            sexo = "Masculino",
             sueldo = 30000.0
         )
         val entitySlot = slot<EmpleadoEntity>()
@@ -93,7 +93,6 @@ class EmpleadoRepositoryImplTest {
         repository.upsert(empleado)
 
         // Then
-        // La entidad almacena la fecha como String (conversión toEntity)
         assertEquals(fecha.toString(), entitySlot.captured.fechaIngreso)
     }
 
@@ -117,7 +116,7 @@ class EmpleadoRepositoryImplTest {
             empleadoId = 1,
             fechaIngreso = "2024-01-15",
             nombres = "Ana García",
-            sexo = "F",
+            sexo = "Femenino",
             sueldo = 48000.0
         )
         coEvery { dao.getById(1) } returns entity
@@ -128,7 +127,7 @@ class EmpleadoRepositoryImplTest {
         // Then
         assertNotNull(result)
         assertEquals("Ana García", result?.nombres)
-        assertEquals("F", result?.sexo)
+        assertEquals("Femenino", result?.sexo)
         assertEquals(48000.0, result?.sueldo ?: 0.0, 0.0)
         assertEquals(1, result?.empleadoId)
     }
