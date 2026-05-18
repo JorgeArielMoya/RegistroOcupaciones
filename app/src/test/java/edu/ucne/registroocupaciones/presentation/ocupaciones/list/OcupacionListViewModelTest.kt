@@ -41,8 +41,6 @@ class OcupacionListViewModelTest {
         )
     }
 
-    // ─── carga ────────────────────────────────────────────────────────────────
-
     @Test
     fun `loadOcupaciones carga lista correctamente`() = runTest {
         // Given
@@ -76,8 +74,6 @@ class OcupacionListViewModelTest {
         assertFalse(viewModel.state.value.isLoading)
         assertTrue(viewModel.state.value.ocupaciones.isEmpty())
     }
-
-    // ─── eventos ──────────────────────────────────────────────────────────────
 
     @Test
     fun `onEvent Delete elimina ocupacion y muestra mensaje`() = runTest {

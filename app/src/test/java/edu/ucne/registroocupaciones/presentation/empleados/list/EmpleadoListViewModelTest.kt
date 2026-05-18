@@ -42,8 +42,6 @@ class EmpleadoListViewModelTest {
         )
     }
 
-    // ─── carga ────────────────────────────────────────────────────────────────
-
     @Test
     fun `loadEmpleados carga lista correctamente`() = runTest {
         // Given
@@ -77,8 +75,6 @@ class EmpleadoListViewModelTest {
         assertFalse(viewModel.state.value.isLoading)
         assertTrue(viewModel.state.value.empleados.isEmpty())
     }
-
-    // ─── eventos ──────────────────────────────────────────────────────────────
 
     @Test
     fun `onEvent Delete elimina empleado y muestra mensaje`() = runTest {

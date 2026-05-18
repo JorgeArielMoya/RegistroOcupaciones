@@ -212,7 +212,7 @@ class UpsertOcupacionUseCaseTest {
 
     @Test
     fun `invoke no detecta duplicado al editar la misma ocupacion`() = runTest {
-        // Given — al editar id=2, excludeId=2 la query ignora ese registro
+        // Given
         val ocupacion = Ocupacion(ocupacionId = 2, descripcion = "Médico", sueldo = 80000.0)
         coEvery { repository.existsByDescripcion("Médico", 2) } returns false
         coEvery { repository.upsert(ocupacion) } returns 2

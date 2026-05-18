@@ -320,7 +320,7 @@ class UpsertEmpleadoUseCaseTest {
 
     @Test
     fun `invoke valida sexo antes que sueldo`() = runTest {
-        // Given — ambos campos inválidos, debe fallar por sexo primero
+        // Given
         val empleado = Empleado(
             empleadoId = 0,
             fechaIngreso = LocalDate.of(2024, 1, 15),
