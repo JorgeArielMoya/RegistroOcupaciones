@@ -181,8 +181,6 @@ class UpsertEmpleadoUseCaseTest {
         assertTrue(result.isSuccess)
     }
 
-    // ─── Validación: sexo ─────────────────────────────────────────────────────
-
     @Test
     fun `invoke falla cuando sexo esta vacio`() = runTest {
         // Given
