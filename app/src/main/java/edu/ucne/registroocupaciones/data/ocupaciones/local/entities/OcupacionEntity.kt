@@ -1,4 +1,4 @@
-package edu.ucne.registroocupaciones.data.ocupaciones.local
+package edu.ucne.registroocupaciones.data.ocupaciones.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

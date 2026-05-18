@@ -1,4 +1,4 @@
-package edu.ucne.registroocupaciones.presentation.ocupaciones.list
+package edu.ucne.registroocupaciones.presentation.empleados.list
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,12 +15,12 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import edu.ucne.registroocupaciones.domain.ocupaciones.model.Ocupacion
+import edu.ucne.registroocupaciones.domain.empleados.model.Empleado
 
 @Composable
-fun OcupacionListScreen(
-    viewModel: OcupacionListViewModel = hiltViewModel(),
-    onAddOcupacion: () -> Unit,
+fun EmpleadoListScreen(
+    viewModel: EmpleadoListViewModel = hiltViewModel(),
+    onAddEmpleado: () -> Unit,
     onNavigateToEdit: (Int) -> Unit,
     onOpenDrawer: () -> Unit
 ) {
@@ -28,7 +28,7 @@ fun OcupacionListScreen(
 
     LaunchedEffect(state.navigateToCreate) {
         if (state.navigateToCreate) {
-            onAddOcupacion()
+            onAddEmpleado()
         }
     }
 
@@ -38,15 +38,15 @@ fun OcupacionListScreen(
         }
     }
 
-    OcupacionListBody(state, viewModel::onEvent, onAddOcupacion, onOpenDrawer)
+    EmpleadoListBody(state, viewModel::onEvent, onAddEmpleado, onOpenDrawer)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OcupacionListBody(
-    state: OcupacionListUiState,
-    onEvent: (OcupacionListUiEvent) -> Unit,
-    onAddOcupacion: () -> Unit,
+fun EmpleadoListBody(
+    state: EmpleadoListUiState,
+    onEvent: (EmpleadoListUiEvent) -> Unit,
+    onAddEmpleado: () -> Unit,
     onOpenDrawer: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
@@ -54,14 +54,14 @@ fun OcupacionListBody(
     LaunchedEffect(state.message) {
         state.message?.let { message ->
             snackbarHostState.showSnackbar(message)
-            onEvent(OcupacionListUiEvent.ClearMessage)
+            onEvent(EmpleadoListUiEvent.ClearMessage)
         }
     }
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Registro de Ocupaciones") },
+                title = { Text("Registro de Empleados") },
                 navigationIcon = {
                     IconButton(onClick = onOpenDrawer) {
                         Icon(
@@ -75,12 +75,12 @@ fun OcupacionListBody(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = onAddOcupacion,
+                onClick = onAddEmpleado,
                 modifier = Modifier.testTag("fab_add")
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Agregar ocupación"
+                    contentDescription = "Agregar empleado"
                 )
             }
         }
@@ -97,9 +97,9 @@ fun OcupacionListBody(
                         .testTag("loading")
                 )
             } else {
-                if (state.ocupaciones.isEmpty()) {
+                if (state.empleados.isEmpty()) {
                     Text(
-                        text = "No hay ocupaciones",
+                        text = "No hay empleados",
                         modifier = Modifier
                             .align(Alignment.Center)
                             .testTag("empty_message"),
@@ -112,16 +112,16 @@ fun OcupacionListBody(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         items(
-                            items = state.ocupaciones,
-                            key = { it.ocupacionId }
-                        ) { ocupacion ->
-                            OcupacionItem(
-                                ocupacion = ocupacion,
+                            items = state.empleados,
+                            key = { it.empleadoId }
+                        ) { empleado ->
+                            EmpleadoItem(
+                                empleado = empleado,
                                 onDelete = {
-                                    onEvent(OcupacionListUiEvent.Delete(ocupacion.ocupacionId))
+                                    onEvent(EmpleadoListUiEvent.Delete(empleado.empleadoId))
                                 },
                                 onClick = {
-                                    onEvent(OcupacionListUiEvent.Edit(ocupacion.ocupacionId))
+                                    onEvent(EmpleadoListUiEvent.Edit(empleado.empleadoId))
                                 }
                             )
                         }
@@ -134,15 +134,15 @@ fun OcupacionListBody(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OcupacionItem(
-    ocupacion: Ocupacion,
+fun EmpleadoItem(
+    empleado: Empleado,
     onDelete: () -> Unit,
     onClick: () -> Unit
 ) {
     ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
-            .testTag("ocupacion_item_${ocupacion.ocupacionId}"),
+            .testTag("empleado_item_${empleado.empleadoId}"),
         onClick = onClick
     ) {
         Row(
@@ -155,26 +155,34 @@ fun OcupacionItem(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "ID: ${ocupacion.ocupacionId}",
+                    text = "ID: ${empleado.empleadoId}",
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
-                    text = "Descripcion: ${ocupacion.descripcion}",
+                    text = "Nombre: ${empleado.nombres}",
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
-                    text = "Sueldo: ${ocupacion.sueldo}",
+                    text = "Sexo: ${empleado.sexo}",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = "Fecha Ingreso: ${empleado.fechaIngreso}",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = "Sueldo: ${empleado.sueldo}",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
             }
             IconButton(
                 onClick = onDelete,
-                modifier = Modifier.testTag("btn_delete_${ocupacion.ocupacionId}")
+                modifier = Modifier.testTag("btn_delete_${empleado.empleadoId}")
             ) {
                 Icon(
                     imageVector = Icons.Default.Delete,
-                    contentDescription = "Eliminar ocupación"
+                    contentDescription = "Eliminar empleado"
                 )
             }
         }
