@@ -11,7 +11,6 @@ import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class UpsertOcupacionUseCaseTest {
-
     private lateinit var useCase: UpsertOcupacionUseCase
     private lateinit var repository: OcupacionRepository
 
