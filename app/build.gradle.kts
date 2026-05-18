@@ -97,6 +97,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("io.mockk:mockk:1.13.8")
     testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("com.google.truth:truth:1.4.2")
 
     // Hilt Testing
     testImplementation("com.google.dagger:hilt-android-testing:2.59")
