@@ -2,11 +2,13 @@ package edu.ucne.registroocupaciones.data.ocupaciones.local.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import edu.ucne.registroocupaciones.data.ocupaciones.local.dao.EmpleadoDao
 import edu.ucne.registroocupaciones.data.ocupaciones.local.dao.OcupacionDao
 import edu.ucne.registroocupaciones.data.ocupaciones.local.entities.EmpleadoEntity
 import edu.ucne.registroocupaciones.data.ocupaciones.local.entities.OcupacionEntity
 
+@TypeConverters(Converters::class)
 @Database(
     entities = [OcupacionEntity::class, EmpleadoEntity::class],
     version = 2,
