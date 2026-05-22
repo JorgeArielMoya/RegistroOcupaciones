@@ -15,7 +15,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 @ExperimentalCoroutinesApi
 class EmpleadoListViewModelTest {

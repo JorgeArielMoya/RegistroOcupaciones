@@ -8,7 +8,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 class GetEmpleadoUseCaseTest {
     private lateinit var repository: EmpleadoRepository

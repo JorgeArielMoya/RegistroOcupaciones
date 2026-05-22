@@ -14,7 +14,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 @ExperimentalCoroutinesApi
 class EmpleadoRepositoryImplTest {
@@ -114,7 +114,7 @@ class EmpleadoRepositoryImplTest {
         // Given
         val entity = EmpleadoEntity(
             empleadoId = 1,
-            fechaIngreso = "2024-01-15",
+            fechaIngreso = LocalDate.of(2024, 1, 15),
             nombres = "Ana García",
             sexo = "Femenino",
             sueldo = 48000.0
@@ -148,8 +148,8 @@ class EmpleadoRepositoryImplTest {
     fun `observeAll retorna flow con lista de empleados`() = runTest {
         // Given
         val entities = listOf(
-            EmpleadoEntity(1, "2023-05-10", "Pedro Soto", "M", 40000.0),
-            EmpleadoEntity(2, "2024-02-20", "Laura Méndez", "F", 55000.0)
+            EmpleadoEntity(1, LocalDate.of(2023, 5, 10), "Pedro Soto", "M", 40000.0),
+            EmpleadoEntity(2, LocalDate.of(2024, 2, 20), "Laura Méndez", "F", 55000.0)
         )
         every { dao.observeAll() } returns flowOf(entities)
 

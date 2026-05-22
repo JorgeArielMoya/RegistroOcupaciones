@@ -2,11 +2,10 @@ package edu.ucne.registroocupaciones.data.ocupaciones.mappers
 
 import edu.ucne.registroocupaciones.data.ocupaciones.local.entities.EmpleadoEntity
 import edu.ucne.registroocupaciones.domain.empleados.model.Empleado
-import org.threeten.bp.LocalDate
 
 fun EmpleadoEntity.toDomain () : Empleado = Empleado (
     empleadoId = empleadoId,
-    fechaIngreso = LocalDate.parse(fechaIngreso),
+    fechaIngreso = fechaIngreso,
     nombres = nombres,
     sexo = sexo,
     sueldo = sueldo
@@ -14,7 +13,7 @@ fun EmpleadoEntity.toDomain () : Empleado = Empleado (
 
 fun Empleado.toEntity () : EmpleadoEntity = EmpleadoEntity (
     empleadoId = empleadoId,
-    fechaIngreso = fechaIngreso.toString(),
+    fechaIngreso = fechaIngreso,
     nombres = nombres,
     sexo = sexo,
     sueldo = sueldo

@@ -2,7 +2,7 @@ package edu.ucne.registroocupaciones.domain.empleados.usecase
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 class EmpleadoValidationsTest {
 
