@@ -1,7 +1,5 @@
 package edu.ucne.registroocupaciones.presentation.navigation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -16,7 +14,6 @@ import edu.ucne.registroocupaciones.presentation.ocupaciones.edit.OcupacionFormS
 import edu.ucne.registroocupaciones.presentation.ocupaciones.list.OcupacionListScreen
 import kotlinx.coroutines.launch
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavHost(
     navController: NavHostController = rememberNavController()

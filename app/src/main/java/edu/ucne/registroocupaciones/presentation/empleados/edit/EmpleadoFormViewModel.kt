@@ -1,7 +1,5 @@
 package edu.ucne.registroocupaciones.presentation.empleados.edit
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,7 +19,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,7 +39,6 @@ class EmpleadoFormViewModel @Inject constructor(
         loadEmpleado(empleadoId)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun onEvent(event: EmpleadoFormUiEvent) {
         when (event) {
             is EmpleadoFormUiEvent.Load -> loadEmpleado(event.id)
@@ -87,7 +84,6 @@ class EmpleadoFormViewModel @Inject constructor(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun onSave() {
         val nombresValidation = validateNombres(state.value.nombres)
         val sexoValidation = validateSexo(state.value.sexo)
