@@ -10,6 +10,7 @@ data class ValidationResult(
 fun validateFechaIngreso(fecha: LocalDate?): ValidationResult {
     return when {
         fecha == null -> ValidationResult(false, "La fecha de ingreso no puede estar vacía")
+        fecha.isAfter(LocalDate.now()) -> ValidationResult(false, "La fecha de ingreso no puede estar en el futuro")
         else -> ValidationResult(true)
     }
 }
