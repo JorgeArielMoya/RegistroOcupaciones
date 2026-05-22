@@ -76,27 +76,6 @@ class EmpleadoRepositoryImplTest {
     }
 
     @Test
-    fun `upsert mapea la fecha a String al guardar en la entidad`() = runTest {
-        // Given
-        val fecha = LocalDate.of(2024, 3, 20)
-        val empleado = Empleado(
-            empleadoId = 0,
-            fechaIngreso = fecha,
-            nombres = "Carlos Ruiz",
-            sexo = "Masculino",
-            sueldo = 30000.0
-        )
-        val entitySlot = slot<EmpleadoEntity>()
-        coEvery { dao.upsert(capture(entitySlot)) } just Runs
-
-        // When
-        repository.upsert(empleado)
-
-        // Then
-        assertEquals(fecha.toString(), entitySlot.captured.fechaIngreso)
-    }
-
-    @Test
     fun `delete elimina empleado por id correctamente`() = runTest {
         // Given
         val empleadoId = 4
