@@ -1,9 +1,9 @@
 package edu.ucne.registroocupaciones.data.empleados.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import edu.ucne.registroocupaciones.data.ocupaciones.local.dao.EmpleadoDao
-import edu.ucne.registroocupaciones.data.ocupaciones.local.entities.EmpleadoEntity
-import edu.ucne.registroocupaciones.data.ocupaciones.repository.EmpleadoRepositoryImpl
+import edu.ucne.registroocupaciones.data.local.dao.EmpleadoDao
+import edu.ucne.registroocupaciones.data.local.entities.EmpleadoEntity
+import edu.ucne.registroocupaciones.data.repository.EmpleadoRepositoryImpl
 import edu.ucne.registroocupaciones.domain.empleados.model.Empleado
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi

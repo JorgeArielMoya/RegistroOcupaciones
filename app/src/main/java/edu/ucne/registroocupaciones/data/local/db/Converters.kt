@@ -1,4 +1,4 @@
-package edu.ucne.registroocupaciones.data.ocupaciones.local.db
+package edu.ucne.registroocupaciones.data.local.db
 
 import androidx.room.TypeConverter
 import java.time.LocalDate

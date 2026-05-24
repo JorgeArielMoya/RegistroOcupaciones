@@ -1,10 +1,10 @@
-package edu.ucne.registroocupaciones.data.ocupaciones.local.dao
+package edu.ucne.registroocupaciones.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
-import edu.ucne.registroocupaciones.data.ocupaciones.local.entities.EmpleadoEntity
+import edu.ucne.registroocupaciones.data.local.entities.EmpleadoEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

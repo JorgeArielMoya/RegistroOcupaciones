@@ -1,6 +1,6 @@
-package edu.ucne.registroocupaciones.data.ocupaciones.mappers
+package edu.ucne.registroocupaciones.data.mappers
 
-import edu.ucne.registroocupaciones.data.ocupaciones.local.entities.EmpleadoEntity
+import edu.ucne.registroocupaciones.data.local.entities.EmpleadoEntity
 import edu.ucne.registroocupaciones.domain.empleados.model.Empleado
 
 fun EmpleadoEntity.toDomain () : Empleado = Empleado (

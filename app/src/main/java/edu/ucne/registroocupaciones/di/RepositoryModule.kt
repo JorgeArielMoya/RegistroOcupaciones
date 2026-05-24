@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import edu.ucne.registroocupaciones.data.ocupaciones.repository.EmpleadoRepositoryImpl
-import edu.ucne.registroocupaciones.data.ocupaciones.repository.OcupacionRepositoryImpl
+import edu.ucne.registroocupaciones.data.repository.EmpleadoRepositoryImpl
+import edu.ucne.registroocupaciones.data.repository.OcupacionRepositoryImpl
 import edu.ucne.registroocupaciones.domain.empleados.repository.EmpleadoRepository
 import edu.ucne.registroocupaciones.domain.ocupaciones.repository.OcupacionRepository
 import javax.inject.Singleton

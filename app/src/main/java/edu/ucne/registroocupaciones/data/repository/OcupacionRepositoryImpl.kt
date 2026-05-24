@@ -1,8 +1,8 @@
-package edu.ucne.registroocupaciones.data.ocupaciones.repository
+package edu.ucne.registroocupaciones.data.repository
 
-import edu.ucne.registroocupaciones.data.ocupaciones.local.dao.OcupacionDao
-import edu.ucne.registroocupaciones.data.ocupaciones.mappers.toDomain
-import edu.ucne.registroocupaciones.data.ocupaciones.mappers.toEntity
+import edu.ucne.registroocupaciones.data.local.dao.OcupacionDao
+import edu.ucne.registroocupaciones.data.mappers.toDomain
+import edu.ucne.registroocupaciones.data.mappers.toEntity
 import edu.ucne.registroocupaciones.domain.ocupaciones.model.Ocupacion
 import edu.ucne.registroocupaciones.domain.ocupaciones.repository.OcupacionRepository
 import kotlinx.coroutines.flow.Flow

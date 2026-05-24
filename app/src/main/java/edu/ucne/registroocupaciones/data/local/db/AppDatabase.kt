@@ -1,12 +1,12 @@
-package edu.ucne.registroocupaciones.data.ocupaciones.local.db
+package edu.ucne.registroocupaciones.data.local.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import edu.ucne.registroocupaciones.data.ocupaciones.local.dao.EmpleadoDao
-import edu.ucne.registroocupaciones.data.ocupaciones.local.dao.OcupacionDao
-import edu.ucne.registroocupaciones.data.ocupaciones.local.entities.EmpleadoEntity
-import edu.ucne.registroocupaciones.data.ocupaciones.local.entities.OcupacionEntity
+import edu.ucne.registroocupaciones.data.local.dao.EmpleadoDao
+import edu.ucne.registroocupaciones.data.local.dao.OcupacionDao
+import edu.ucne.registroocupaciones.data.local.entities.EmpleadoEntity
+import edu.ucne.registroocupaciones.data.local.entities.OcupacionEntity
 
 @TypeConverters(Converters::class)
 @Database(
