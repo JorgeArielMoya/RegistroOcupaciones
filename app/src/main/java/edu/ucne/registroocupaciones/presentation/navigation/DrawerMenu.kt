@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.DrawerState
@@ -75,6 +76,13 @@ fun DrawerMenu(
                             icon = Icons.Filled.Person,
                             isSelected = selectedItem.value == "Empleados",
                             navigateTo = { handleItemClick(Screen.EmpleadoList, it) }
+                        )
+
+                        DrawerItem(
+                            title = "Horas Extras",
+                            icon = Icons.Filled.AccessTime,
+                            isSelected = selectedItem.value == "Horas Extras",
+                            navigateTo = { handleItemClick(Screen.HoraExtraList, it) }
                         )
                     }
                 }
