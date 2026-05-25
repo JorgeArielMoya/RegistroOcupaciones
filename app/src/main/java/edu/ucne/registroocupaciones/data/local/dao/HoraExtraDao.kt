@@ -10,10 +10,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface HoraExtraDao {
     @Upsert
-    suspend fun upsert (entity : HoraExtraDao)
+    suspend fun upsert (entity: HoraExtraEntity)
 
     @Delete
-    suspend fun delete (entity: HoraExtraDao)
+    suspend fun delete (entity: HoraExtraEntity)
 
     @Query("SELECT * FROM horas_extras ORDER BY horaExtraId DESC")
     fun observeAll () : Flow<List<HoraExtraEntity>>
