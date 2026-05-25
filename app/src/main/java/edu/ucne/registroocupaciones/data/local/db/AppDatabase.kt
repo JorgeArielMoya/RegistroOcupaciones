@@ -4,18 +4,21 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import edu.ucne.registroocupaciones.data.local.dao.EmpleadoDao
+import edu.ucne.registroocupaciones.data.local.dao.HoraExtraDao
 import edu.ucne.registroocupaciones.data.local.dao.OcupacionDao
 import edu.ucne.registroocupaciones.data.local.entities.EmpleadoEntity
+import edu.ucne.registroocupaciones.data.local.entities.HoraExtraEntity
 import edu.ucne.registroocupaciones.data.local.entities.OcupacionEntity
 
 @TypeConverters(Converters::class)
 @Database(
-    entities = [OcupacionEntity::class, EmpleadoEntity::class],
-    version = 2,
+    entities = [OcupacionEntity::class, EmpleadoEntity::class, HoraExtraEntity::class],
+    version = 3,
     exportSchema = false
 )
 
 abstract class AppDatabase : RoomDatabase() {
     abstract fun ocupacionDao () : OcupacionDao
     abstract fun empleadoDao () : EmpleadoDao
+    abstract fun horaExtraDao () : HoraExtraDao
 }
