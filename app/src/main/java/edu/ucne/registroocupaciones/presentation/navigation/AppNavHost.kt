@@ -10,6 +10,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edu.ucne.registroocupaciones.presentation.empleados.edit.EmpleadoFormScreen
 import edu.ucne.registroocupaciones.presentation.empleados.list.EmpleadoListScreen
+import edu.ucne.registroocupaciones.presentation.horasextras.edit.HoraExtraFormScreen
+import edu.ucne.registroocupaciones.presentation.horasextras.list.HoraExtraListScreen
 import edu.ucne.registroocupaciones.presentation.ocupaciones.edit.OcupacionFormScreen
 import edu.ucne.registroocupaciones.presentation.ocupaciones.list.OcupacionListScreen
 import kotlinx.coroutines.launch
@@ -74,6 +76,30 @@ fun AppNavHost(
                     onBack = {
                         navController.navigate(Screen.EmpleadoList) {
                             popUpTo(Screen.EmpleadoList) { inclusive = true }
+                        }
+                    }
+                )
+            }
+
+            composable<Screen.HoraExtraList> {
+                HoraExtraListScreen(
+                    onAddHoraExtra = {
+                        navController.navigate(Screen.HoraExtraForm(0))
+                    },
+                    onNavigateToEdit = { id ->
+                        navController.navigate(Screen.HoraExtraForm(id))
+                    },
+                    onOpenDrawer = {
+                        scope.launch { drawerState.open() }
+                    }
+                )
+            }
+
+            composable<Screen.HoraExtraForm> {
+                HoraExtraFormScreen(
+                    onBack = {
+                        navController.navigate(Screen.HoraExtraList) {
+                            popUpTo(Screen.HoraExtraList) { inclusive = true }
                         }
                     }
                 )
