@@ -2,6 +2,7 @@ package edu.ucne.registroocupaciones.presentation.horasextras.edit
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -15,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import java.time.Instant
 import java.time.ZoneOffset
+import androidx.compose.foundation.verticalScroll
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,11 +49,11 @@ fun HoraExtraFormScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(16.dp),
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
 
-            // Dropdown de empleados
             val empleadoSeleccionado = state.empleados.find { it.empleadoId == state.empleadoId }
             Box {
                 OutlinedTextField(
@@ -61,7 +63,10 @@ fun HoraExtraFormScreen(
                     label = { Text("Empleado") },
                     trailingIcon = {
                         IconButton(onClick = { empleadoDropdownExpanded = true }) {
-                            Icon(Icons.Default.ArrowDropDown, contentDescription = "Abrir empleados")
+                            Icon(
+                                Icons.Default.ArrowDropDown,
+                                contentDescription = "Abrir empleados"
+                            )
                         }
                     },
                     modifier = Modifier.fillMaxWidth(),
@@ -89,7 +94,6 @@ fun HoraExtraFormScreen(
                 }
             }
 
-            // Fecha Desde
             val dateDesdePickerState = rememberDatePickerState()
             Box {
                 OutlinedTextField(
@@ -127,7 +131,6 @@ fun HoraExtraFormScreen(
                 ) { DatePicker(state = dateDesdePickerState) }
             }
 
-            // Fecha Hasta
             val dateHastaPickerState = rememberDatePickerState()
             Box {
                 OutlinedTextField(
@@ -165,7 +168,6 @@ fun HoraExtraFormScreen(
                 ) { DatePicker(state = dateHastaPickerState) }
             }
 
-            // Horas Totales
             OutlinedTextField(
                 value = state.horasTotales,
                 onValueChange = { viewModel.onEvent(HoraExtraFormUiEvent.HorasTotalesChanged(it)) },
@@ -177,7 +179,6 @@ fun HoraExtraFormScreen(
                 singleLine = true
             )
 
-            // Horas Nocturnas
             OutlinedTextField(
                 value = state.horasNocturnas,
                 onValueChange = { viewModel.onEvent(HoraExtraFormUiEvent.HorasNocturnasChanged(it)) },
@@ -189,7 +190,6 @@ fun HoraExtraFormScreen(
                 singleLine = true
             )
 
-            // Resumen de cálculo en tiempo real
             val horasTotalesDouble = state.horasTotales.toDoubleOrNull() ?: 0.0
             val horasNocturnasDouble = state.horasNocturnas.toDoubleOrNull() ?: 0.0
             val sueldo = state.empleados.find { it.empleadoId == state.empleadoId }?.sueldo ?: 0.0
