@@ -8,7 +8,6 @@ class UpsertEmpleadoUseCase @Inject constructor(
     private val repository: EmpleadoRepository
 ) {
     suspend operator fun invoke(empleado: Empleado): Result<Int> {
-
         val fechaResult = validateFechaIngreso(empleado.fechaIngreso)
         if (!fechaResult.isValid)
             return Result.failure(IllegalArgumentException(fechaResult.error))
