@@ -1,6 +1,7 @@
 package edu.ucne.registroocupaciones.presentation.ocupaciones.list
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -12,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -50,6 +52,9 @@ fun OcupacionListBody(
     onOpenDrawer: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
+
+    val totalOcupaciones = remember(state.ocupaciones) { state.ocupaciones.size }
+    val sumatoriaSueldos = remember(state.ocupaciones) { state.ocupaciones.sumOf { it.sueldo ?: 0.0 } }
 
     LaunchedEffect(state.message) {
         state.message?.let { message ->
@@ -106,24 +111,66 @@ fun OcupacionListBody(
                         style = MaterialTheme.typography.bodyLarge
                     )
                 } else {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        items(
-                            items = state.ocupaciones,
-                            key = { it.ocupacionId }
-                        ) { ocupacion ->
-                            OcupacionItem(
-                                ocupacion = ocupacion,
-                                onDelete = {
-                                    onEvent(OcupacionListUiEvent.Delete(ocupacion.ocupacionId))
-                                },
-                                onClick = {
-                                    onEvent(OcupacionListUiEvent.Edit(ocupacion.ocupacionId))
-                                }
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        LazyColumn(
+                            modifier = Modifier.weight(1f),
+                            contentPadding = PaddingValues(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(
+                                items = state.ocupaciones,
+                                key = { it.ocupacionId }
+                            ) { ocupacion ->
+                                OcupacionItem(
+                                    ocupacion = ocupacion,
+                                    onDelete = {
+                                        onEvent(OcupacionListUiEvent.Delete(ocupacion.ocupacionId))
+                                    },
+                                    onClick = {
+                                        onEvent(OcupacionListUiEvent.Edit(ocupacion.ocupacionId))
+                                    }
+                                )
+                            }
+                        }
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceVariant
                             )
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalArrangement = Arrangement.Start,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.padding(end = 32.dp)){
+                                    Text(
+                                        "Conteo:",
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                    Text(
+                                        "$totalOcupaciones",
+                                        style = MaterialTheme.typography.titleLarge,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                                Column {
+                                    Text(
+                                        "Total:",
+                                        style = MaterialTheme.typography.bodyMedium
+                                    )
+                                    Text(
+                                        String.format("$%,.2f", sumatoriaSueldos),
+                                        style = MaterialTheme.typography.titleLarge,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            }
                         }
                     }
                 }

@@ -51,6 +51,9 @@ fun EmpleadoListBody(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
+    val totalEmpleados = remember(state.empleados) { state.empleados.size }
+    val sumatoriaSueldos = remember(state.empleados) { state.empleados.sumOf { it.sueldo ?: 0.0 } }
+
     LaunchedEffect(state.message) {
         state.message?.let { message ->
             snackbarHostState.showSnackbar(message)
@@ -106,24 +109,70 @@ fun EmpleadoListBody(
                         style = MaterialTheme.typography.bodyLarge
                     )
                 } else {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        items(
-                            items = state.empleados,
-                            key = { it.empleadoId }
-                        ) { empleado ->
-                            EmpleadoItem(
-                                empleado = empleado,
-                                onDelete = {
-                                    onEvent(EmpleadoListUiEvent.Delete(empleado.empleadoId))
-                                },
-                                onClick = {
-                                    onEvent(EmpleadoListUiEvent.Edit(empleado.empleadoId))
-                                }
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        LazyColumn(
+                            modifier = Modifier.weight(1f),
+                            contentPadding = PaddingValues(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(
+                                items = state.empleados,
+                                key = { it.empleadoId }
+                            ) { empleado ->
+                                EmpleadoItem(
+                                    empleado = empleado,
+                                    onDelete = {
+                                        onEvent(EmpleadoListUiEvent.Delete(empleado.empleadoId))
+                                    },
+                                    onClick = {
+                                        onEvent(EmpleadoListUiEvent.Edit(empleado.empleadoId))
+                                    }
+                                )
+                            }
+                        }
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceVariant
                             )
+                        ) {
+
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalArrangement = Arrangement.Start,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.padding(end = 32.dp)) {
+                                    Text(
+                                        text = "Conteo",
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                    Text(
+                                        text = "$totalEmpleados",
+                                        style = MaterialTheme.typography.titleLarge,
+                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
+                                    )
+                                }
+
+                                Column {
+                                    Text(
+                                        text = "Total:",
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                    Text(
+                                        text = String.format("$%,.2f", sumatoriaSueldos),
+                                        style = MaterialTheme.typography.titleLarge,
+                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            }
                         }
                     }
                 }
