@@ -1,6 +1,7 @@
 package edu.ucne.registroocupaciones.presentation.horasextras.list
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -46,6 +47,8 @@ fun HoraExtraListBody(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
+    val totalRegistros = remember(state.horasExtras) { state.horasExtras.size }
+
     LaunchedEffect(state.message) {
         state.message?.let { message ->
             snackbarHostState.showSnackbar(message)
@@ -86,30 +89,61 @@ fun HoraExtraListBody(
                         style = MaterialTheme.typography.bodyLarge
                     )
                 } else {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        items(
-                            items = state.horasExtras,
-                            key = { it.horaExtraId }
-                        ) { horaExtra ->
-                            val sueldo = state.empleados
-                                .find { it.empleadoId == horaExtra.empleadoId }
-                                ?.sueldo ?: 0.0
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        LazyColumn(
+                            modifier = Modifier.weight(1f),
+                            contentPadding = PaddingValues(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(
+                                items = state.horasExtras,
+                                key = { it.horaExtraId }
+                            ) { horaExtra ->
+                                val sueldo = state.empleados
+                                    .find { it.empleadoId == horaExtra.empleadoId }
+                                    ?.sueldo ?: 0.0
 
-                            val nombreEmpleado = state.empleados
-                                .find { it.empleadoId == horaExtra.empleadoId }
-                                ?.nombres ?: "Empleado desconocido"
+                                val nombreEmpleado = state.empleados
+                                    .find { it.empleadoId == horaExtra.empleadoId }
+                                    ?.nombres ?: "Empleado desconocido"
 
-                            HoraExtraItem(
-                                horaExtra = horaExtra,
-                                sueldo = sueldo,
-                                nombreEmpleado = nombreEmpleado,
-                                onDelete = { onEvent(HoraExtraListUiEvent.Delete(horaExtra.horaExtraId)) },
-                                onClick = { onEvent(HoraExtraListUiEvent.Edit(horaExtra.horaExtraId)) }
+                                HoraExtraItem(
+                                    horaExtra = horaExtra,
+                                    sueldo = sueldo,
+                                    nombreEmpleado = nombreEmpleado,
+                                    onDelete = { onEvent(HoraExtraListUiEvent.Delete(horaExtra.horaExtraId)) },
+                                    onClick = { onEvent(HoraExtraListUiEvent.Edit(horaExtra.horaExtraId)) }
+                                )
+                            }
+                        }
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surfaceVariant
                             )
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                horizontalArrangement = Arrangement.Start,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.padding(end = 32.dp)) {
+                                    Text(
+                                        text = "Conteo:",
+                                        style = MaterialTheme.typography.bodyLarge
+                                    )
+                                    Text(
+                                        text = "$totalRegistros",
+                                        style = MaterialTheme.typography.titleLarge,
+                                        fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            }
                         }
                     }
                 }
