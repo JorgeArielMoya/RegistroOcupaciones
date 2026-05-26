@@ -99,9 +99,14 @@ fun HoraExtraListBody(
                                 .find { it.empleadoId == horaExtra.empleadoId }
                                 ?.sueldo ?: 0.0
 
+                            val nombreEmpleado = state.empleados
+                                .find { it.empleadoId == horaExtra.empleadoId }
+                                ?.nombres ?: "Empleado desconocido"
+
                             HoraExtraItem(
                                 horaExtra = horaExtra,
                                 sueldo = sueldo,
+                                nombreEmpleado = nombreEmpleado,
                                 onDelete = { onEvent(HoraExtraListUiEvent.Delete(horaExtra.horaExtraId)) },
                                 onClick = { onEvent(HoraExtraListUiEvent.Edit(horaExtra.horaExtraId)) }
                             )
@@ -118,6 +123,7 @@ fun HoraExtraListBody(
 fun HoraExtraItem(
     horaExtra: HoraExtra,
     sueldo: Double,
+    nombreEmpleado: String,
     onDelete: () -> Unit,
     onClick: () -> Unit
 ) {
@@ -147,7 +153,7 @@ fun HoraExtraItem(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "Empleado ID: ${horaExtra.empleadoId}",
+                    text = nombreEmpleado,
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
