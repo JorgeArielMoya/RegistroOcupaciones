@@ -58,7 +58,7 @@ class HoraExtraListViewModelTest {
                 empleadoId = 1,
                 fechaDesde = LocalDate.of(2026, 5, 19),
                 fechaHasta = LocalDate.of(2026, 5, 25),
-                horasTotales = 52.0,   // 8h al 35%
+                horasTotales = 52.0,
                 horasNocturnas = 0.0
             ),
             HoraExtra(
@@ -66,7 +66,7 @@ class HoraExtraListViewModelTest {
                 empleadoId = 2,
                 fechaDesde = LocalDate.of(2026, 5, 19),
                 fechaHasta = LocalDate.of(2026, 5, 25),
-                horasTotales = 75.0,   // 24h al 35% + 7h al 100%
+                horasTotales = 75.0,
                 horasNocturnas = 10.0
             )
         )
@@ -195,7 +195,7 @@ class HoraExtraListViewModelTest {
                 empleadoId = 1,
                 fechaDesde = LocalDate.of(2026, 5, 19),
                 fechaHasta = LocalDate.of(2026, 5, 25),
-                horasTotales = 68.0,   // tope exacto del 35%
+                horasTotales = 68.0,
                 horasNocturnas = 0.0
             )
         )

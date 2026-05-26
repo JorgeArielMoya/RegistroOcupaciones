@@ -249,8 +249,8 @@ class UpsertHoraExtraUseCaseTest {
             empleadoId = 1,
             fechaDesde = LocalDate.of(2026, 5, 19),
             fechaHasta = LocalDate.of(2026, 5, 25),
-            horasTotales = 52.0,   // 8h extras
-            horasNocturnas = 9.0   // excede las 8h extras
+            horasTotales = 52.0,
+            horasNocturnas = 9.0
         )
 
         val result = useCase(horaExtra)
