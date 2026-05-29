@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.material3.adaptive)
     implementation(libs.androidx.material3.adaptive.navigation.suite)
+    implementation(libs.androidx.material3.adaptive.layout)
+    implementation(libs.androidx.material3.adaptive.navigation)
 
     // Room
     implementation(libs.androidx.room.runtime)
