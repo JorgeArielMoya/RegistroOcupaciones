@@ -109,7 +109,7 @@ fun OcupacionListContent(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val totalOcupaciones = remember(state.ocupaciones) { state.ocupaciones.size }
-    val sumatoriaSueldos = remember(state.ocupaciones) { state.ocupaciones.sumOf { it.sueldo ?: 0.0 } }
+    val sumatoriaSueldos = remember(state.ocupaciones) { state.ocupaciones.sumOf { it.sueldo } }
 
     LaunchedEffect(state.message) {
         state.message?.let { message ->
