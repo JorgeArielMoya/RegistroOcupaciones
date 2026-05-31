@@ -31,6 +31,7 @@ fun AppNavHost(
             navController = navController,
             startDestination = Screen.OcupacionList
         ) {
+
             composable<Screen.OcupacionList> {
                 OcupacionListScreen(
                     onAddOcupacion = {
@@ -44,14 +45,12 @@ fun AppNavHost(
                     }
                 )
             }
-
             composable<Screen.OcupacionForm> {
                 OcupacionFormScreen(
+                    isPanel = false,
                     onBack = {
                         navController.navigate(Screen.OcupacionList) {
-                            popUpTo(Screen.OcupacionList) {
-                                inclusive = true
-                            }
+                            popUpTo(Screen.OcupacionList) { inclusive = true }
                         }
                     }
                 )
@@ -70,9 +69,9 @@ fun AppNavHost(
                     }
                 )
             }
-
             composable<Screen.EmpleadoForm> {
                 EmpleadoFormScreen(
+                    isPanel = false,
                     onBack = {
                         navController.navigate(Screen.EmpleadoList) {
                             popUpTo(Screen.EmpleadoList) { inclusive = true }
@@ -94,9 +93,9 @@ fun AppNavHost(
                     }
                 )
             }
-
             composable<Screen.HoraExtraForm> {
                 HoraExtraFormScreen(
+                    isPanel = false,
                     onBack = {
                         navController.navigate(Screen.HoraExtraList) {
                             popUpTo(Screen.HoraExtraList) { inclusive = true }
