@@ -26,6 +26,10 @@ fun OcupacionFormScreen(
         if (state.saved) onBack()
     }
 
+    LaunchedEffect(state.deleted) {
+        if (state.deleted) onBack()
+    }
+
     if (isPanel) {
         OcupacionFormContent(
             state = state,
