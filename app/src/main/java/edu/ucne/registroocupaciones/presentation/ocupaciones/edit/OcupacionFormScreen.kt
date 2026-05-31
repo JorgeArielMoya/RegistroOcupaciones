@@ -34,7 +34,6 @@ fun OcupacionFormScreen(
         OcupacionFormContent(
             state = state,
             onEvent = viewModel::onEvent,
-            onBack = onBack
         )
     } else {
         Scaffold(
@@ -53,7 +52,6 @@ fun OcupacionFormScreen(
                 OcupacionFormContent(
                     state = state,
                     onEvent = viewModel::onEvent,
-                    onBack = onBack
                 )
             }
         }
@@ -64,7 +62,6 @@ fun OcupacionFormScreen(
 fun OcupacionFormContent(
     state: OcupacionFormUiState,
     onEvent: (OcupacionFormUiEvent) -> Unit,
-    onBack: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -83,7 +80,7 @@ fun OcupacionFormContent(
             isError = state.descripcionError != null || state.descripcionDuplicada,
             supportingText = {
                 when {
-                    state.descripcionError != null -> Text(state.descripcionError!!)
+                    state.descripcionError != null -> Text(state.descripcionError)
                     state.descripcionDuplicada -> Text(
                         text = "Esta ocupación ya ha sido registrada",
                         color = MaterialTheme.colorScheme.error

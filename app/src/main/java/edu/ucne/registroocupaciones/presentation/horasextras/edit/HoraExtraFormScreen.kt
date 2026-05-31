@@ -39,7 +39,6 @@ fun HoraExtraFormScreen(
         HoraExtraFormContent(
             state = state,
             onEvent = viewModel::onEvent,
-            onBack = onBack
         )
     } else {
         Scaffold(
@@ -58,7 +57,6 @@ fun HoraExtraFormScreen(
                 HoraExtraFormContent(
                     state = state,
                     onEvent = viewModel::onEvent,
-                    onBack = onBack
                 )
             }
         }
@@ -70,7 +68,6 @@ fun HoraExtraFormScreen(
 fun HoraExtraFormContent(
     state: HoraExtraFormUiState,
     onEvent: (HoraExtraFormUiEvent) -> Unit,
-    onBack: () -> Unit
 ) {
     var empleadoDropdownExpanded by remember { mutableStateOf(false) }
     var showDateDesdePicker by remember { mutableStateOf(false) }

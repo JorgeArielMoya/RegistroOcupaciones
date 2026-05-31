@@ -38,7 +38,6 @@ fun EmpleadoFormScreen(
         EmpleadoFormContent(
             state = state,
             onEvent = viewModel::onEvent,
-            onBack = onBack
         )
     } else {
         Scaffold(
@@ -57,7 +56,6 @@ fun EmpleadoFormScreen(
                 EmpleadoFormContent(
                     state = state,
                     onEvent = viewModel::onEvent,
-                    onBack = onBack
                 )
             }
         }
@@ -69,7 +67,6 @@ fun EmpleadoFormScreen(
 fun EmpleadoFormContent(
     state: EmpleadoFormUiState,
     onEvent: (EmpleadoFormUiEvent) -> Unit,
-    onBack: () -> Unit
 ) {
     var dropdownExpanded by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
