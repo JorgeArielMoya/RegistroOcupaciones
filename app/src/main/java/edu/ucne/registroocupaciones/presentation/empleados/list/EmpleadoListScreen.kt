@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
@@ -146,7 +145,6 @@ fun EmpleadoListContent(
                         items(state.empleados, key = { it.empleadoId }) { empleado ->
                             EmpleadoItem(
                                 empleado = empleado,
-                                onDelete = { onEvent(EmpleadoListUiEvent.Delete(empleado.empleadoId)) },
                                 onClick = { onItemClick(empleado.empleadoId) }
                             )
                         }
@@ -193,7 +191,6 @@ fun EmpleadoListContent(
 @Composable
 fun EmpleadoItem(
     empleado: Empleado,
-    onDelete: () -> Unit,
     onClick: () -> Unit
 ) {
     ElevatedCard(
@@ -214,12 +211,6 @@ fun EmpleadoItem(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
-            }
-            IconButton(
-                onClick = onDelete,
-                modifier = Modifier.testTag("btn_delete_${empleado.empleadoId}")
-            ) {
-                Icon(Icons.Default.Delete, contentDescription = "Eliminar empleado")
             }
         }
     }

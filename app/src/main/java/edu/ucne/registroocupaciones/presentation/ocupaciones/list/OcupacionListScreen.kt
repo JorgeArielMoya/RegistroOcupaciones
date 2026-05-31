@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
@@ -92,7 +91,6 @@ fun OcupacionListScreen(
             },
             detailPane = {
                 AnimatedPane {
-                    val ocupacionId = navigator.currentDestination?.contentKey ?: 0
                     OcupacionFormScreen(
                         isPanel = true,
                         onBack = { scope.launch { navigator.navigateBack() } }
@@ -150,7 +148,6 @@ fun OcupacionListContent(
                         items(state.ocupaciones, key = { it.ocupacionId }) { ocupacion ->
                             OcupacionItem(
                                 ocupacion = ocupacion,
-                                onDelete = { onEvent(OcupacionListUiEvent.Delete(ocupacion.ocupacionId)) },
                                 onClick = { onItemClick(ocupacion.ocupacionId) }
                             )
                         }
@@ -199,7 +196,6 @@ fun OcupacionListContent(
 @Composable
 fun OcupacionItem(
     ocupacion: Ocupacion,
-    onDelete: () -> Unit,
     onClick: () -> Unit
 ) {
     ElevatedCard(
@@ -222,12 +218,6 @@ fun OcupacionItem(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
-            }
-            IconButton(
-                onClick = onDelete,
-                modifier = Modifier.testTag("btn_delete_${ocupacion.ocupacionId}")
-            ) {
-                Icon(Icons.Default.Delete, contentDescription = "Eliminar ocupación")
             }
         }
     }

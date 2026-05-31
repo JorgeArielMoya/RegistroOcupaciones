@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
@@ -148,7 +147,6 @@ fun HoraExtraListContent(
                                 horaExtra = horaExtra,
                                 sueldo = sueldo,
                                 nombreEmpleado = nombreEmpleado,
-                                onDelete = { onEvent(HoraExtraListUiEvent.Delete(horaExtra.horaExtraId)) },
                                 onClick = { onItemClick(horaExtra.horaExtraId) }
                             )
                         }
@@ -187,7 +185,6 @@ fun HoraExtraItem(
     horaExtra: HoraExtra,
     sueldo: Double,
     nombreEmpleado: String,
-    onDelete: () -> Unit,
     onClick: () -> Unit
 ) {
     val horasExtras = maxOf(0.0, horaExtra.horasTotales - 44.0)
@@ -224,9 +221,6 @@ fun HoraExtraItem(
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.primary
                 )
-            }
-            IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = "Eliminar")
             }
         }
     }
