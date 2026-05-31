@@ -107,4 +107,11 @@ dependencies {
 
     // Room Testing
     testImplementation("androidx.room:room-testing:2.8.4")
+
+    //Adaptative Screen
+    implementation(libs.androidx.material3.adaptive)
+    implementation(libs.androidx.material3.adaptive.layout)
+    implementation(libs.androidx.material3.adaptive.navigation)
+    implementation(libs.androidx.material3.adaptive.nav.suite)
+    implementation(libs.androidx.material3.window.size)
 }
