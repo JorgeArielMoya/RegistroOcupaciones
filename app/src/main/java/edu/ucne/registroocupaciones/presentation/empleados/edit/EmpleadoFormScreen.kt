@@ -82,10 +82,6 @@ fun EmpleadoFormContent(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = if (state.isNew) "Nuevo Empleado" else "Editar Empleado",
-            style = MaterialTheme.typography.titleLarge
-        )
 
         OutlinedTextField(
             value = state.nombres,

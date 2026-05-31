@@ -85,10 +85,6 @@ fun HoraExtraFormContent(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = if (state.isNew) "Nueva Hora Extra" else "Editar Hora Extra",
-            style = MaterialTheme.typography.titleLarge
-        )
 
         val empleadoSeleccionado = state.empleados.find { it.empleadoId == state.empleadoId }
         Box {
@@ -217,7 +213,6 @@ fun HoraExtraFormContent(
             singleLine = true
         )
 
-        // Resumen de cálculo
         val horasTotalesDouble = state.horasTotales.toDoubleOrNull() ?: 0.0
         val horasNocturnasDouble = state.horasNocturnas.toDoubleOrNull() ?: 0.0
         val sueldo = state.empleados.find { it.empleadoId == state.empleadoId }?.sueldo ?: 0.0
