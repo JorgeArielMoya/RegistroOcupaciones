@@ -68,10 +68,6 @@ fun OcupacionFormContent(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = if (state.isNew) "Nueva Ocupación" else "Editar Ocupación",
-            style = MaterialTheme.typography.titleLarge
-        )
 
         OutlinedTextField(
             value = state.descripcion,
