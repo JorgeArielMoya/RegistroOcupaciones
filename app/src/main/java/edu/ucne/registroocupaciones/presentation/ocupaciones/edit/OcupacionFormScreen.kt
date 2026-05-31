@@ -17,82 +17,130 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun OcupacionFormScreen(
     viewModel: OcupacionFormViewModel = hiltViewModel(),
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    isPanel: Boolean = false
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.saved) {
-        if (state.saved) {
-            onBack()
-        }
+        if (state.saved) onBack()
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(if (state.isNew) "Nueva Ocupación" else "Editar Ocupación") },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Atrás")
+    if (isPanel) {
+        OcupacionFormContent(
+            state = state,
+            onEvent = viewModel::onEvent,
+            onBack = onBack
+        )
+    } else {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(if (state.isNew) "Nueva Ocupación" else "Editar Ocupación") },
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(Icons.Default.ArrowBack, contentDescription = "Atrás")
+                        }
                     }
-                }
-            )
+                )
+            }
+        ) { padding ->
+            Box(modifier = Modifier.padding(padding)) {
+                OcupacionFormContent(
+                    state = state,
+                    onEvent = viewModel::onEvent,
+                    onBack = onBack
+                )
+            }
         }
-    ) { padding ->
-        Column(
+    }
+}
+
+@Composable
+fun OcupacionFormContent(
+    state: OcupacionFormUiState,
+    onEvent: (OcupacionFormUiEvent) -> Unit,
+    onBack: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Text(
+            text = if (state.isNew) "Nueva Ocupación" else "Editar Ocupación",
+            style = MaterialTheme.typography.titleLarge
+        )
+
+        OutlinedTextField(
+            value = state.descripcion,
+            onValueChange = { onEvent(OcupacionFormUiEvent.DescripcionChanged(it)) },
+            label = { Text("Descripción") },
             modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .fillMaxWidth()
+                .testTag("input_description"),
+            isError = state.descripcionError != null || state.descripcionDuplicada,
+            supportingText = {
+                when {
+                    state.descripcionError != null -> Text(state.descripcionError!!)
+                    state.descripcionDuplicada -> Text(
+                        text = "Esta ocupación ya ha sido registrada",
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            },
+            singleLine = false,
+            minLines = 3,
+            maxLines = 5
+        )
+
+        OutlinedTextField(
+            value = state.sueldo,
+            onValueChange = { onEvent(OcupacionFormUiEvent.SueldoChanged(it)) },
+            label = { Text("Sueldo") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag("input_sueldo"),
+            isError = state.sueldoError != null,
+            supportingText = state.sueldoError?.let { { Text(it) } },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+            singleLine = true
+        )
+
+        Button(
+            onClick = { onEvent(OcupacionFormUiEvent.Save) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag("btn_save"),
+            enabled = !state.isSaving
         ) {
-            OutlinedTextField(
-                value = state.descripcion,
-                onValueChange = { viewModel.onEvent(OcupacionFormUiEvent.DescripcionChanged(it)) },
-                label = { Text("Descripción") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .testTag("input_description"),
-                isError = state.descripcionError != null || state.descripcionDuplicada,
-                supportingText = {
-                    when {
-                        state.descripcionError != null -> Text(state.descripcionError!!)
-                        state.descripcionDuplicada -> Text(
-                            text = "Esta ocupación ya ha sido registrada",
-                            color = MaterialTheme.colorScheme.error
-                        )
-                    }
-                },
-                singleLine = false,
-                minLines = 3,
-                maxLines = 5
-            )
-            OutlinedTextField(
-                value = state.sueldo,
-                onValueChange = { viewModel.onEvent(OcupacionFormUiEvent.SueldoChanged(it)) },
-                label = { Text("Sueldo") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .testTag("input_sueldo"),
-                isError = state.sueldoError != null,
-                supportingText = state.sueldoError?.let { { Text(it) } },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                singleLine = true
-            )
-            Button(
-                onClick = { viewModel.onEvent(OcupacionFormUiEvent.Save) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .testTag("btn_save"),
-                enabled = !state.isSaving
+            if (state.isSaving) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            } else {
+                Text("Guardar")
+            }
+        }
+
+        if (!state.isNew) {
+            OutlinedButton(
+                onClick = { onEvent(OcupacionFormUiEvent.Delete) },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !state.isDeleting,
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = MaterialTheme.colorScheme.error
+                )
             ) {
-                if (state.isSaving) {
+                if (state.isDeleting) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(24.dp),
-                        color = MaterialTheme.colorScheme.onPrimary
+                        color = MaterialTheme.colorScheme.error
                     )
                 } else {
-                    Text("Guardar")
+                    Text("Eliminar")
                 }
             }
         }
