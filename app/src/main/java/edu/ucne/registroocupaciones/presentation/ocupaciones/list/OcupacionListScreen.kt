@@ -31,7 +31,8 @@ fun OcupacionListScreen(
     viewModel: OcupacionListViewModel = hiltViewModel(),
     onAddOcupacion: () -> Unit,
     onNavigateToEdit: (Int) -> Unit,
-    onOpenDrawer: () -> Unit
+    onOpenDrawer: () -> Unit,
+    isExpanded: Boolean = false
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val navigator = rememberListDetailPaneScaffoldNavigator<Int>()
@@ -45,11 +46,13 @@ fun OcupacionListScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("Registro de Ocupaciones") },
-                navigationIcon = {
-                    IconButton(onClick = onOpenDrawer) {
-                        Icon(Icons.Default.Menu, contentDescription = "Abrir menú")
+                navigationIcon = if (!isExpanded) {
+                    {
+                        IconButton(onClick = onOpenDrawer) {
+                            Icon(Icons.Default.Menu, contentDescription = "Abrir menú")
+                        }
                     }
-                }
+                } else ({})
             )
         },
         floatingActionButton = {
