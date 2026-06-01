@@ -25,11 +25,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 
 @Composable
 fun DrawerMenu(
     drawerState: DrawerState,
     navHostController: NavHostController,
+    isExpanded: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val selectedItem = remember { mutableStateOf("Ocupaciones") }
@@ -43,52 +49,72 @@ fun DrawerMenu(
         scope.launch { drawerState.close() }
     }
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet(
-                modifier = Modifier.width(280.dp)
-            ) {
+    if (isExpanded) {
+        Row {
+            NavigationRail {
                 Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = "Registro de Ocupaciones",
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.DarkGray,
-                    modifier = Modifier.padding(16.dp)
+                NavigationRailItem(
+                    selected = selectedItem.value == "Ocupaciones",
+                    onClick = { handleItemClick(Screen.OcupacionList, "Ocupaciones") },
+                    icon = { Icon(Icons.Filled.Work, contentDescription = "Ocupaciones") },
+                    label = { Text("Ocupaciones") }
                 )
-
-                HorizontalDivider()
-                Spacer(modifier = Modifier.height(16.dp))
-
-                LazyColumn {
-                    item {
-                        DrawerItem(
-                            title = "Ocupaciones",
-                            icon = Icons.Filled.Work,
-                            isSelected = selectedItem.value == "Ocupaciones",
-                            navigateTo = { handleItemClick(Screen.OcupacionList, it) }
-                        )
-
-                        DrawerItem(
-                            title = "Empleados",
-                            icon = Icons.Filled.Person,
-                            isSelected = selectedItem.value == "Empleados",
-                            navigateTo = { handleItemClick(Screen.EmpleadoList, it) }
-                        )
-
-                        DrawerItem(
-                            title = "Horas Extras",
-                            icon = Icons.Filled.AccessTime,
-                            isSelected = selectedItem.value == "Horas Extras",
-                            navigateTo = { handleItemClick(Screen.HoraExtraList, it) }
-                        )
+                NavigationRailItem(
+                    selected = selectedItem.value == "Empleados",
+                    onClick = { handleItemClick(Screen.EmpleadoList, "Empleados") },
+                    icon = { Icon(Icons.Filled.Person, contentDescription = "Empleados") },
+                    label = { Text("Empleados") }
+                )
+                NavigationRailItem(
+                    selected = selectedItem.value == "Horas Extras",
+                    onClick = { handleItemClick(Screen.HoraExtraList, "Horas Extras") },
+                    icon = { Icon(Icons.Filled.AccessTime, contentDescription = "Horas Extras") },
+                    label = { Text("Horas Extras") }
+                )
+            }
+            content()
+        }
+    } else {
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            drawerContent = {
+                ModalDrawerSheet(modifier = Modifier.width(280.dp)) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = "Registro de Ocupaciones",
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.DarkGray,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                    HorizontalDivider()
+                    Spacer(modifier = Modifier.height(16.dp))
+                    LazyColumn {
+                        item {
+                            DrawerItem(
+                                title = "Ocupaciones",
+                                icon = Icons.Filled.Work,
+                                isSelected = selectedItem.value == "Ocupaciones",
+                                navigateTo = { handleItemClick(Screen.OcupacionList, it) }
+                            )
+                            DrawerItem(
+                                title = "Empleados",
+                                icon = Icons.Filled.Person,
+                                isSelected = selectedItem.value == "Empleados",
+                                navigateTo = { handleItemClick(Screen.EmpleadoList, it) }
+                            )
+                            DrawerItem(
+                                title = "Horas Extras",
+                                icon = Icons.Filled.AccessTime,
+                                isSelected = selectedItem.value == "Horas Extras",
+                                navigateTo = { handleItemClick(Screen.HoraExtraList, it) }
+                            )
+                        }
                     }
                 }
             }
+        ) {
+            content()
         }
-    ) {
-        content()
     }
 }
