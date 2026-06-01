@@ -18,7 +18,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun OcupacionFormScreen(
     viewModel: OcupacionFormViewModel = hiltViewModel(),
     onBack: () -> Unit,
-    isPanel: Boolean = false
+    isPanel: Boolean = false,
+    ocupacionId: Int? = null
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -28,6 +29,12 @@ fun OcupacionFormScreen(
 
     LaunchedEffect(state.deleted) {
         if (state.deleted) onBack()
+    }
+
+    LaunchedEffect(ocupacionId) {
+        if (isPanel && ocupacionId != null) {
+            viewModel.onEvent(OcupacionFormUiEvent.Load(ocupacionId))
+        }
     }
 
     if (isPanel) {

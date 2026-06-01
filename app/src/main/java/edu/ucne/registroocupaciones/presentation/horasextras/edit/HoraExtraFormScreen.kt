@@ -23,7 +23,8 @@ import java.time.ZoneOffset
 fun HoraExtraFormScreen(
     viewModel: HoraExtraFormViewModel = hiltViewModel(),
     onBack: () -> Unit,
-    isPanel: Boolean = false
+    isPanel: Boolean = false,
+    horaExtraId: Int? = null
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -33,6 +34,12 @@ fun HoraExtraFormScreen(
 
     LaunchedEffect(state.deleted) {
         if (state.deleted) onBack()
+    }
+
+    LaunchedEffect(horaExtraId) {
+        if (isPanel && horaExtraId != null) {
+            viewModel.onEvent(HoraExtraFormUiEvent.Load(horaExtraId))
+        }
     }
 
     if (isPanel) {
