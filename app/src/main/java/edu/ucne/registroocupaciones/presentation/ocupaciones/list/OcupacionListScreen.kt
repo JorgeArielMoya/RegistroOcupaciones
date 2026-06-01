@@ -91,7 +91,9 @@ fun OcupacionListScreen(
             },
             detailPane = {
                 AnimatedPane {
+                    val ocupacionId = navigator.currentDestination?.contentKey ?: 0
                     OcupacionFormScreen(
+                        ocupacionId = ocupacionId,
                         isPanel = true,
                         onBack = { scope.launch { navigator.navigateBack() } }
                     )

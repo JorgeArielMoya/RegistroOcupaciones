@@ -92,7 +92,9 @@ fun EmpleadoListScreen(
             },
             detailPane = {
                 AnimatedPane {
+                    val empleadoId = navigator.currentDestination?.contentKey ?: 0
                     EmpleadoFormScreen(
+                        empleadoId = empleadoId,
                         isPanel = true,
                         onBack = { scope.launch { navigator.navigateBack() } }
                     )

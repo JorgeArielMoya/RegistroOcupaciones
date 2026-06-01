@@ -90,7 +90,9 @@ fun HoraExtraListScreen(
             },
             detailPane = {
                 AnimatedPane {
+                    val horaExtraId = navigator.currentDestination?.contentKey ?: 0
                     HoraExtraFormScreen(
+                        horaExtraId = horaExtraId,
                         isPanel = true,
                         onBack = { scope.launch { navigator.navigateBack() } }
                     )
