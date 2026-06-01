@@ -26,8 +26,10 @@ class OcupacionFormViewModel @Inject constructor(
     private val deleteOcupacionUseCase: DeleteOcupacionUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val routeArgs = savedStateHandle.toRoute<Screen.OcupacionForm>()
-    private val ocupacionId: Int = routeArgs.ocupacionId
+
+    private val ocupacionId: Int = if (savedStateHandle.contains("ocupacionId"))
+        savedStateHandle.toRoute<Screen.OcupacionForm>().ocupacionId
+    else 0
 
     private val _state = MutableStateFlow(OcupacionFormUiState())
     val state: StateFlow<OcupacionFormUiState> = _state.asStateFlow()

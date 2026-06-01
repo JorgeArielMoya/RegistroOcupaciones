@@ -29,8 +29,9 @@ class EmpleadoFormViewModel @Inject constructor(
     private val deleteEmpleadoUseCase: DeleteEmpleadoUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val routeArgs = savedStateHandle.toRoute<Screen.EmpleadoForm>()
-    private val empleadoId: Int = routeArgs.empleadoId
+    private val empleadoId: Int = if (savedStateHandle.contains("empleadoId"))
+        savedStateHandle.toRoute<Screen.EmpleadoForm>().empleadoId
+    else 0
 
     private val _state = MutableStateFlow(EmpleadoFormUiState())
     val state: StateFlow<EmpleadoFormUiState> = _state.asStateFlow()

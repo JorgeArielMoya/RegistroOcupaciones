@@ -32,8 +32,9 @@ class HoraExtraFormViewModel @Inject constructor(
     private val observeEmpleadosUseCase: ObserveEmpleadoUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val routeArgs = savedStateHandle.toRoute<Screen.HoraExtraForm>()
-    private val horaExtraId: Int = routeArgs.horaExtraId
+    private val horaExtraId: Int = if (savedStateHandle.contains("horaExtraId"))
+        savedStateHandle.toRoute<Screen.HoraExtraForm>().horaExtraId
+    else 0
 
     private val _state = MutableStateFlow(HoraExtraFormUiState())
     val state: StateFlow<HoraExtraFormUiState> = _state.asStateFlow()
