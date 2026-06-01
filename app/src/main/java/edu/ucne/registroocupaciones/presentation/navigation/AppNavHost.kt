@@ -44,6 +44,7 @@ fun AppNavHost(
 
             composable<Screen.OcupacionList> {
                 OcupacionListScreen(
+                    isExpanded = isExpanded,
                     onAddOcupacion = {
                         navController.navigate(Screen.OcupacionForm(0))
                     },
@@ -68,6 +69,7 @@ fun AppNavHost(
 
             composable<Screen.EmpleadoList> {
                 EmpleadoListScreen(
+                    isExpanded = isExpanded,
                     onAddEmpleado = {
                         navController.navigate(Screen.EmpleadoForm(0))
                     },
@@ -92,6 +94,7 @@ fun AppNavHost(
 
             composable<Screen.HoraExtraList> {
                 HoraExtraListScreen(
+                    isExpanded = isExpanded,
                     onAddHoraExtra = {
                         navController.navigate(Screen.HoraExtraForm(0))
                     },
