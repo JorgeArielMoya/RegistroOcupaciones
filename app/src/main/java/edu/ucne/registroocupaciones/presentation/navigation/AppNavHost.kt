@@ -15,17 +15,27 @@ import edu.ucne.registroocupaciones.presentation.horasextras.list.HoraExtraListS
 import edu.ucne.registroocupaciones.presentation.ocupaciones.edit.OcupacionFormScreen
 import edu.ucne.registroocupaciones.presentation.ocupaciones.list.OcupacionListScreen
 import kotlinx.coroutines.launch
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.activity.compose.LocalActivity
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun AppNavHost(
     navController: NavHostController = rememberNavController()
 ) {
+    val activity = LocalActivity.current!!
+    val windowSizeClass = calculateWindowSizeClass(activity)
+    val isExpanded = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
+
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
     DrawerMenu(
         drawerState = drawerState,
-        navHostController = navController
+        navHostController = navController,
+        isExpanded = isExpanded
     ) {
         NavHost(
             navController = navController,
